@@ -20,8 +20,10 @@ print(formula1 == formula3)
 print(formula1 == formula2)
 print(formula3 == And(Atom('p'), Atom('q')))
 '''
-for i in atoms(formula8):
-    print(i)
+'''for i in atoms(formula8):
+    print(i)'''
+
+print(number_of_atoms(formula8))
 '''
 print('formula1:',formula1)
 print('formula2:', formula2)
