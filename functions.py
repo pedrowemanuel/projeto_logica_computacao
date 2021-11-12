@@ -64,9 +64,9 @@ def number_of_atoms(formula):
     if isinstance(formula,Atom):
         return 1
     if isinstance(formula, Not):
-        return 1 + number_of_atoms(formula.inner)
+        return number_of_atoms(formula.inner)
     if isinstance(formula, Implies) or isinstance(formula, And) or isinstance(formula, Or):
-        return 1 + number_of_atoms(formula.right) + number_of_atoms(formula.left)
+        return number_of_atoms(formula.right) + number_of_atoms(formula.left)
 
 
 def number_of_connectives(formula):
