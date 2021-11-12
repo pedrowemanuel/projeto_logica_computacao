@@ -41,20 +41,13 @@ def subformulas(formula):
 
 
 def atoms(formula):
-    """Returns the set of all atoms occurring in a formula.
-
-    For example, observe the piece of code below.
-
-    my_formula = Implies(Atom('p'), Or(Atom('p'), Atom('s')))
-    for atom in atoms(my_formula):
-        print(atom)
-
-    This piece of code above prints: p, s
-    (Note that there is no repetition of p)
-    """
-    pass  # ======== REMOVE THIS LINE AND INSERT YOUR CODE HERE ========
-
-
+    if isinstance(formula, Atom):
+        return {formula}
+    if isinstance(formula,Not):
+        return atoms(formula.inner)
+    if isinstance(formula, Implies) or isinstance(formula, And) or isinstance(formula, Or):
+        return {formula.left}.union(atoms(formula.right))
+        
 def number_of_atoms(formula):
     """Returns the number of atoms occurring in a formula.
     For instance,

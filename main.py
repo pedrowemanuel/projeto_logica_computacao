@@ -15,12 +15,15 @@ formula7 = Implies(Not(And(Atom('p'), Atom('s'))), And(Atom('q'), Atom('r')))  #
 formula8 = Implies(Not(And(Atom('p'), Atom('s'))), And(Atom('q'), Not(And(Atom('p'), Atom('s')))))
 # ((¬(p /\ s)) -> (q /\ (¬(p /\ s))))
 
-
+'''
 print(formula1 == formula3)
 print(formula1 == formula2)
 print(formula3 == And(Atom('p'), Atom('q')))
-
-print('formula1:', formula1)
+'''
+for i in atoms(formula8):
+    print(i)
+'''
+print('formula1:',formula1)
 print('formula2:', formula2)
 print('formula3:', formula3)
 print('formula4:', formula4)
@@ -48,3 +51,4 @@ for subformula in subformulas(formula8):
 # for example, for formula8:
 print('number of subformulas of formula8:', len(subformulas(formula8)))
 print('len(subformulas(formula8)) <= length(formula8):', len(subformulas(formula8)) <= length(formula8))
+'''
