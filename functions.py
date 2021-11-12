@@ -52,7 +52,11 @@ def atoms(formula):
     This piece of code above prints: p, s
     (Note that there is no repetition of p)
     """
-    pass  # ======== REMOVE THIS LINE AND INSERT YOUR CODE HERE ========
+    list_atoms = []
+    for subformula in subformulas(formula):
+        if isinstance(subformula, Atom):
+            list_atoms.append(subformula)
+    return list_atoms
 
 
 def number_of_atoms(formula):
