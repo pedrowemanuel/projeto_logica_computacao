@@ -24,7 +24,7 @@ print(formula3 == And(Atom('p'), Atom('q')))
 '''for i in atoms(formula8):
     print(i)'''
 
-print(number_of_atoms(formula8))
+# print(number_of_atoms(formula8))
 '''
 print('formula1:',formula1)
 print('formula2:', formula2)
@@ -61,5 +61,6 @@ for i in atoms(formula8):
 
 '''
 
-# for atom in satisfiability_brute_force(formula8):
-#     print(atom)
+if satisfiability_brute_force(formula8) != False:
+    lista = satisfiability_brute_force(formula8)
+    print(lista)

@@ -9,8 +9,7 @@ def truth_value(formula, interpretation):
     """Determines the truth value of a formula in an interpretation (valuation).
     An interpretation may be defined as dictionary. For example, {'p': True, 'q': False}.
     """
-    pass
-    # ======== YOUR CODE HERE ========
+    return True
 
 
 def is_logical_consequence(premises, conclusion):  # function TT-Entails? in the book AIMA.
@@ -34,13 +33,33 @@ def satisfiability_brute_force(formula):
     """Checks whether formula is satisfiable.
     In other words, if the input formula is satisfiable, it returns an interpretation that assigns true to the formula.
     Otherwise, it returns False."""
-    list_atoms = atoms(formula)
-    interpretation = {}
+    listAtoms = atoms(formula)
+    interpretation = []
 
-    return sat(formula, list_atoms, interpretation)
+    return sat(formula, listAtoms, interpretation)
 
 def sat(formula, atoms, interpretation):
+
+    if atoms == []:
+        if truth_value(formula, interpretation):
+            return interpretation
+        else:
+            return False
+
     atom = atoms.pop()
+
+    interpretationTrue = interpretation.copy()
+    interpretationTrue.append({str(atom): True})
+
+    interpretationFalse = interpretation.copy()
+    interpretationFalse.append({str(atom): False})
+
+    resultInterpretationTrue = sat(formula, atoms, interpretationTrue)
+
+    if resultInterpretationTrue != False:
+        return resultInterpretationTrue
+
+    return sat(formula, atoms, interpretationFalse)
     
 
 
