@@ -30,12 +30,17 @@ def is_valid(formula):
     pass
     # ======== YOUR CODE HERE ========
 
-
 def satisfiability_brute_force(formula):
     """Checks whether formula is satisfiable.
     In other words, if the input formula is satisfiable, it returns an interpretation that assigns true to the formula.
     Otherwise, it returns False."""
-    pass
-    # ======== YOUR CODE HERE ========
+    list_atoms = atoms(formula)
+    interpretation = {}
+
+    return sat(formula, list_atoms, interpretation)
+
+def sat(formula, atoms, interpretation):
+    atom = atoms.pop()
+    
 
 

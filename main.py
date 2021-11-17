@@ -3,6 +3,7 @@
 
 from formula import *
 from functions import *
+from semantics import satisfiability_brute_force
 
 
 formula1 = Atom('p')  # p
@@ -59,3 +60,6 @@ for i in atoms(formula8):
     print(i)
 
 '''
+
+# for atom in satisfiability_brute_force(formula8):
+#     print(atom)
