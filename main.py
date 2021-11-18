@@ -61,8 +61,9 @@ for i in atoms(formula8):
 
 '''
 
-# formulaTeste = And(Atom('p'), And(Not(Atom('q')), Or(Atom('s'), Atom('r'))))
+# formulaTeste = Atom('p')
 
 # lista = satisfiability_brute_force(formulaTeste)
+
 # if lista != False:
 #     print(lista)

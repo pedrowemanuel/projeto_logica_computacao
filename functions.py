@@ -71,10 +71,19 @@ def number_of_atoms(formula):
 def remove_atom_from_list(atom, listAtoms):
     """Removes an Atom from a list of atoms (listAtoms)"""
 
-    for indice in range(len(listAtoms)):
-        if listAtoms[indice] == atom:
-            del listAtoms[indice]
+    for index in range(len(listAtoms)):
+        if listAtoms[index] == atom:
+            del listAtoms[index]
             break
+
+def index_of_atom(atom, interpretation):
+    """Get the index of an Atom in an interpretation. If you don't find it returns -1"""
+
+    for index in range(len(interpretation)):
+        if interpretation[index] == atom:
+            return interpretation[index]
+
+    return -1
 
 def number_of_connectives(formula):
     """Returns the number of connectives occurring in a formula."""
