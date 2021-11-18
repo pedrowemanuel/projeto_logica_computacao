@@ -68,6 +68,13 @@ def number_of_atoms(formula):
     if isinstance(formula, Implies) or isinstance(formula, And) or isinstance(formula, Or):
         return number_of_atoms(formula.right) + number_of_atoms(formula.left)
 
+def remove_atom_from_list(atom, listAtoms):
+    """Removes an Atom from a list of atoms (listAtoms)"""
+
+    for indice in range(len(listAtoms)):
+        if listAtoms[indice] == atom:
+            del listAtoms[indice]
+            break
 
 def number_of_connectives(formula):
     """Returns the number of connectives occurring in a formula."""
