@@ -49,8 +49,9 @@ def satisfiability_brute_force(formula):
     """Checks whether formula is satisfiable.
     In other words, if the input formula is satisfiable, it returns an interpretation that assigns true to the formula.
     Otherwise, it returns False."""
+
     listAtoms = atoms(formula)
-    interpretation = primary_interpretation_in_formula_and(formula, listAtoms)
+    interpretation = primary_interpretation(formula, listAtoms)
 
     return sat(formula, listAtoms, interpretation)
 
@@ -80,20 +81,18 @@ def sat(formula, atoms, interpretation):
     
     return sat(formula, atomsCopy, interpretationFalse)
 
-def primary_interpretation_in_formula_and(formula, listAtoms):
-    """Creates initial interpretation for formulas if they are of the And instance and on at least one of their sides contains an Atom or Not(Atom).
-    For each Atom that is added in interpretation, it is removed from the Atoms list"""
+def primary_interpretation(formula, listAtoms):
+    """Creates an initial interpretation for formulas if they are of the instance Atom, Not (Atom), or And (if at least one of their sides contains an Atom or Not (Atom).
+       For each Atom added in the interpretation, it is removed from the atom list. """
 
     interpretation = []
 
-    if isinstance(formula, And):
-        true_interpretation_for_atom_or_not(formula.left, interpretation, listAtoms)
-        true_interpretation_for_atom_or_not(formula.right, interpretation, listAtoms)
+    true_interpretation_for_atom_not_and(formula, interpretation, listAtoms)
 
     return interpretation
 
-def true_interpretation_for_atom_or_not(formula, interpretation, listAtoms):
-    """Adds the truth value in interpretation if the formula is an Atom or Not(Atom) and removes the atoms from the listAtoms"""
+def true_interpretation_for_atom_not_and(formula, interpretation, listAtoms):
+    """Adds the truth value in interpretation and removes the atoms from the listAtoms"""
 
     if isinstance(formula, Atom):
         interpretation.append((str(formula), True))
@@ -102,3 +101,6 @@ def true_interpretation_for_atom_or_not(formula, interpretation, listAtoms):
         if isinstance(formula.inner, Atom):
             interpretation.append((str(formula.inner), False))
             remove_atom_from_list(formula.inner, listAtoms)
+    if isinstance(formula, And):
+        true_interpretation_for_atom_not_and(formula.left, interpretation, listAtoms)
+        true_interpretation_for_atom_not_and(formula.right, interpretation, listAtoms)

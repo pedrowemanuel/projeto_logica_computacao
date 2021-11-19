@@ -61,3 +61,12 @@ for i in atoms(formula8):
     print(i)
 
 '''
+
+
+formulaAndAnd = And(And(Not(Atom('r')), Not(Atom('x'))), formula4)
+result = satisfiability_brute_force(formulaAndAnd)
+print(str(formulaAndAnd))
+if result != False:
+    print(str(result))
+else:
+    print("Não é satisfatível")
