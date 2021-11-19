@@ -4,6 +4,7 @@
 from formula import *
 from functions import *
 from semantics import satisfiability_brute_force
+from lib import *
 
 
 formula1 = Atom('p')  # p
@@ -60,10 +61,3 @@ for i in atoms(formula8):
     print(i)
 
 '''
-
-# formulaTeste = Atom('p')
-
-# lista = satisfiability_brute_force(formulaTeste)
-
-# if lista != False:
-#     print(lista)

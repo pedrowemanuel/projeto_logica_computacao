@@ -2,15 +2,28 @@
 
 
 from formula import *
-from functions import atoms, remove_atom_from_list, index_of_atom
+from functions import atoms, remove_atom_from_list, get_value
+from lib import *
 
 
 def truth_value(formula, interpretation):
     """Determines the truth value of a formula in an interpretation (valuation).
     An interpretation may be defined as dictionary. For example, {'p': True, 'q': False}.
     """
+
     if isinstance(formula, Atom):
-        return interpretation[index_of_atom(formula, interpretation)]
+        return get_value(formula, interpretation)
+    if isinstance(formula, Not):
+        return not truth_value(formula.inner, interpretation)
+    if isinstance(formula, And):
+        return truth_value(formula.left, interpretation) and truth_value(formula.right, interpretation)
+    if isinstance(formula, Or):
+        return truth_value(formula.left, interpretation) or truth_value(formula.right, interpretation)
+    if isinstance(formula, Implies):
+        if truth_value(formula.left, interpretation) and (not truth_value(formula.right, interpretation)):
+            return False
+        else:
+            return True
 
     return False
 
@@ -43,10 +56,10 @@ def satisfiability_brute_force(formula):
 
 def sat(formula, atoms, interpretation):
     """Performs the recursive part of satisfiability_brute_force"""
-
     if atoms == []:
-        if truth_value(formula, interpretation):
-            return interpretation
+        interpretation_convert = dict(interpretation)
+        if truth_value(formula, interpretation_convert):
+            return interpretation_convert
         else:
             return False
 
@@ -55,16 +68,16 @@ def sat(formula, atoms, interpretation):
     atomsCopy2 = atoms.copy()
 
     interpretationTrue = interpretation.copy()
-    interpretationTrue.append({str(atom): True})
+    interpretationTrue.append((str(atom), True))
 
     interpretationFalse = interpretation.copy()
-    interpretationFalse.append({str(atom): False})
+    interpretationFalse.append((str(atom), False))
 
     resultInterpretationTrue = sat(formula, atomsCopy2, interpretationTrue)
 
     if resultInterpretationTrue != False:
         return resultInterpretationTrue
-
+    
     return sat(formula, atomsCopy, interpretationFalse)
 
 def primary_interpretation_in_formula_and(formula, listAtoms):
@@ -83,9 +96,9 @@ def true_interpretation_for_atom_or_not(formula, interpretation, listAtoms):
     """Adds the truth value in interpretation if the formula is an Atom or Not(Atom) and removes the atoms from the listAtoms"""
 
     if isinstance(formula, Atom):
-        interpretation.append({str(formula): True})
+        interpretation.append((str(formula), True))
         remove_atom_from_list(formula, listAtoms)
     elif isinstance(formula, Not):
         if isinstance(formula.inner, Atom):
-            interpretation.append({str(formula.inner): False})
+            interpretation.append((str(formula.inner), False))
             remove_atom_from_list(formula.inner, listAtoms)

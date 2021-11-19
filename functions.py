@@ -76,14 +76,13 @@ def remove_atom_from_list(atom, listAtoms):
             del listAtoms[index]
             break
 
-def index_of_atom(atom, interpretation):
-    """Get the index of an Atom in an interpretation. If you don't find it returns -1"""
+def get_value(atom, interpretation):
+    """Get the value of an Atom in an interpretation. If it doesn't find the Atom, it returns None."""
+    for key in interpretation.keys():
+        if str(key) == str(atom):
+            return interpretation[str(key)]
 
-    for index in range(len(interpretation)):
-        if interpretation[index] == atom:
-            return interpretation[index]
-
-    return -1
+    return None
 
 def number_of_connectives(formula):
     """Returns the number of connectives occurring in a formula."""
