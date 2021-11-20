@@ -12,5 +12,5 @@ Como executar:\
 
 Observações:\
     O número de regras deve ser maior ou igual a 1;\
-    O nome do arquivo deve ser na forma, column_bin_<f>a_<n>p.csv, em que <f>  é a quantidade de atributos dos pacientes e <n> é a quantidade de pacientes no arquivo.
+    O nome do arquivo deve ser na forma, column_bin_[f]a_[n]p.csv, em que [f] é a quantidade de atributos dos pacientes e [n] é a quantidade de pacientes no arquivo.
     
