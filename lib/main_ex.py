@@ -1,11 +1,9 @@
 """You can test your functions in this module as in the following code: """
 
 
-from formula import *
-from functions import *
-from semantics import satisfiability_brute_force
-from lib import *
-
+from .formula import *
+from .functions import *
+from .semantics import satisfiability_brute_force
 
 formula1 = Atom('p')  # p
 formula2 = Atom('q')  # q

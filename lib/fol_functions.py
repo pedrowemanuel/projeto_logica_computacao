@@ -1,5 +1,5 @@
-from fol_formula import *
-from term import *
+from .fol_formula import *
+from .term import *
 
 
 def length_fol(formula):
