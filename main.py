@@ -18,7 +18,7 @@ def main(args):
         sys.exit()
 
     arquivo = args[1] #nome do arquivo
-    m = args[2] #numero de regras
+    m = int(args[2]) #numero de regras
 
     nome_arquivo = arquivo
     arquivo = arquivo.split('_') #separando o arquivo em strings
