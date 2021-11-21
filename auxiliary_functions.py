@@ -26,7 +26,9 @@ def separar_dados(dados):
 
         if dados_paciente != []:
             if dados_paciente[quantidade_de_colunas - 1] == 0:
-                pacientes_sem_patologia.extend(dados_paciente)
+                dados_paciente.pop()
+                pacientes_sem_patologia.append(dados_paciente)
             elif dados_paciente[quantidade_de_colunas - 1] == 1:
-                pacientes_com_patologia.extend(dados_paciente)
+                dados_paciente.pop()
+                pacientes_com_patologia.append(dados_paciente)
     return [atributos, pacientes_com_patologia, pacientes_sem_patologia]
