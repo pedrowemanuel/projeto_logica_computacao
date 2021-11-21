@@ -1,5 +1,6 @@
 import csv
 import sys
+from auxiliary_functions import separar_dados
 
 from restrictions import *
 
@@ -22,13 +23,13 @@ def main(args):
     nome_arquivo = arquivo
     arquivo = arquivo.split('_') #separando o arquivo em strings
 
-    atributos = int("".join(x for x in arquivo[2] if x not in alfabeto))
-    pacientes = int("".join(x for x in arquivo[3] if x not in alfabeto))
+    numero_atributos = int("".join(x for x in arquivo[2] if x not in alfabeto))
+    numero_pacientes = int("".join(x for x in arquivo[3] if x not in alfabeto))
 
     try:
         with open(f"./pacientes/{nome_arquivo}", "r") as file:
             for linha in file:
-                dados.append(linha)
+                dados.append(linha.split(','))
         file.close()
     except FileNotFoundError:
         print("Arquivo nao encontrado. Digite novamente o nome do arquivo")
@@ -36,6 +37,9 @@ def main(args):
     if(not dados):
         print("Arquivo vazio. Procure outro arquivo para pesquisar")
         sys.exit()
+
+    # seperando os dados
+    [atributos, pacientes_com_patologia, pacientes_sem_patologia] = separar_dados(dados)
 
     return 0
 
