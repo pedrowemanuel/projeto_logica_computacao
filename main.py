@@ -23,9 +23,6 @@ def main(args):
     nome_arquivo = arquivo
     arquivo = arquivo.split('_') #separando o arquivo em strings
 
-    numero_atributos = int("".join(x for x in arquivo[2] if x not in alfabeto))
-    numero_pacientes = int("".join(x for x in arquivo[3] if x not in alfabeto))
-
     try:
         with open(f"./pacientes/{nome_arquivo}", "r") as file:
             for linha in file:
@@ -40,6 +37,7 @@ def main(args):
 
     # seperando os dados
     [atributos, pacientes_com_patologia, pacientes_sem_patologia] = separar_dados(dados)
+    print(restricao2(atributos,m))
 
     return 0
 
