@@ -21,7 +21,7 @@ def restricao2(atributos , num_regras):
             lista.append(formula_or)
         formula = or_all(lista)
         dados_formula.append(formula)
-    return or_all(dados_formula)
+    return and_all(dados_formula)
 
 """Restrição 5: Cada paciente com patologia deve ser coberto por alguma das regras."""
 def pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, numero_de_regras):
