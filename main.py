@@ -37,7 +37,29 @@ def main(args):
 
     # seperando os dados
     [atributos, pacientes_com_patologia, pacientes_sem_patologia] = separar_dados(dados)
-    print(restricao4(pacientes_com_patologia, atributos, m))
+
+    print('Processando ...')
+
+    formula_final = And(
+        And(
+            And(
+                apenas_tres_casos_para_cada_regra_atributo(m, atributos),
+                restricao2(atributos, m)
+            ),
+            And(
+                pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_patologia, m, atributos),
+                restricao4(pacientes_com_patologia, atributos, m)
+            ),
+        ),
+        pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, m)
+    )
+
+    solucao = satisfiability_brute_force(formula_final)
+
+    if solucao:
+        print(solucao)
+    else:
+        print('Não existe um conjunto de ' + m + ' regras que classifique corretamente todos os pacientes.')
 
     return 0
 
