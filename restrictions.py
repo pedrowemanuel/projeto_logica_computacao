@@ -17,17 +17,17 @@ def apenas_tres_casos_para_cada_regra_atributo(numero_de_regras, atributos):
                 Or (
                     Or(
                         And(
-                            And(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_p'), Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_n'))),
-                            Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_s'))
+                            And(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_p'), Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_n'))),
+                            Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_s'))
                         ),
                         And(
-                            And(Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_p')), Atom('x_' + str(atributos[a]) + '_' + str(i) + '_n')),
-                            Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_s'))
+                            And(Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_p')), Atom('X_' + str(atributos[a]) + '_' + str(i) + '_n')),
+                            Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_s'))
                         ),
                     ),
                     And(
-                        And(Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_p')), Not(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_n'))),
-                        Atom('x_' + str(atributos[a]) + '_' + str(i) + '_s')
+                        And(Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_p')), Not(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_n'))),
+                        Atom('X_' + str(atributos[a]) + '_' + str(i) + '_s')
                     ),
                 )
             )
@@ -47,7 +47,7 @@ def restricao2(atributos , num_regras):
             or_lista.append(
                 Not(
                     Atom(
-                        "X_"+str(atributos[j])+","+str(i)+",s"  
+                        "X_"+str(atributos[j])+"_"+str(i)+"_s"  
                     )
                 )
             )    
@@ -70,9 +70,9 @@ def pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_pato
 
             for a in range(len(pacientes_sem_patologia[j])):
                 if pacientes_sem_patologia[j][a] == 0:
-                    or_lista.append(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_p'))
+                    or_lista.append(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_p'))
                 elif pacientes_sem_patologia[j][a] == 1:
-                    or_lista.append(Atom('x_' + str(atributos[a]) + '_' + str(i) + '_n'))
+                    or_lista.append(Atom('X_' + str(atributos[a]) + '_' + str(i) + '_n'))
         
             formula_or = or_all(or_lista)
             and_lista.append(formula_or)
@@ -82,6 +82,31 @@ def pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_pato
 
     return and_all(dados_formula)
 
+'''Para cada paciente com patologia, cada regra e cada atributo, se o atributo do paciente n ̃ao se aplicar
+ao da regra, ent ̃ao a regra n ̃ao cobre esse paciente.'''
+def restricao4(pacientes_com_patologia, atributos, regras):
+    dados_formula = []
+    for j in range(len(pacientes_com_patologia)):
+        lista = []
+        for i in range(1, regras + 1):
+            implie_lista = []
+            for a in range(len(pacientes_com_patologia[j])):
+                if pacientes_com_patologia[j][a] == 0:
+                    implie_lista.append(
+                        Implies(
+                            Atom('X_' + str(atributos[a]) + '_' + str(i) + '_p'), Not(Atom("C_"+str(i)+"_"+str(j+1)))
+                        )
+                    )
+                elif pacientes_com_patologia[j][a] == 1:
+                    implie_lista.append(
+                        Implies(
+                            Atom('X_' + str(atributos[a]) + '_' + str(i) + '_n'), Not(Atom("C_"+str(i)+"_"+str(j+1)))
+                        )
+                    )
+            
+            lista.append(and_all(implie_lista))
+        dados_formula.append(and_all(lista))
+    return and_all(dados_formula)
 """Restrição 5: Cada paciente com patologia deve ser coberto por alguma das regras."""
 def pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, numero_de_regras):
 
@@ -91,7 +116,7 @@ def pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, numer
         or_lista = []
 
         for i in range(1, numero_de_regras + 1):
-            or_lista.append(Atom('c_'+ str(i) + '_' + str(j + 1)))
+            or_lista.append(Atom('C_'+ str(i) + '_' + str(j + 1)))
 
         formula_or = or_all(or_lista)
         dados_formula.append(formula_or)

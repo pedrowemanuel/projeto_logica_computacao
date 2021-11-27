@@ -37,7 +37,7 @@ def main(args):
 
     # seperando os dados
     [atributos, pacientes_com_patologia, pacientes_sem_patologia] = separar_dados(dados)
-    print(restricao2(atributos,m))
+    print(restricao4(pacientes_com_patologia, atributos, m))
 
     return 0
 
