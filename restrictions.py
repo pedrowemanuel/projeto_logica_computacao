@@ -32,7 +32,7 @@ def apenas_tres_casos_para_cada_regra_atributo(numero_de_regras, atributos):
                 )
             )
     
-        formula_or = or_all(and_lista)
+        formula_or = and_all(and_lista)
         dados_formula.append(formula_or)
 
     return and_all(dados_formula)
