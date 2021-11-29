@@ -7,10 +7,9 @@ from restrictions import *
 def main(args):
 
     dados = []
-    alfabeto = ['a','b',"c",'d','e','f',"g",'h','i','j',"k",'l','m','n',"o",'p','q','r','s','t','u','v','w','x','y','z',".","_"]
 
     if(len(args) != 3):
-        print("Parametros incorretos: digite -> python main.py nome_do_arquivo.csv n_regras")
+        print("Parâmetros incorretos: digite -> python main.py nome_do_arquivo.csv n_regras")
         sys.exit()
 
     if(int(args[2]) <= 0):
@@ -29,10 +28,10 @@ def main(args):
                 dados.append(linha.split(','))
         file.close()
     except FileNotFoundError:
-        print("Arquivo nao encontrado. Digite novamente o nome do arquivo")
+        print("Arquivo não encontrado. Digite novamente o nome do arquivo.")
 
     if(not dados):
-        print("Arquivo vazio. Procure outro arquivo para pesquisar")
+        print("Arquivo vazio. Procure outro arquivo para pesquisar.")
         sys.exit()
 
     # seperando os dados
