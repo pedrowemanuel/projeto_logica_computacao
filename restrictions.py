@@ -32,12 +32,12 @@ def apenas_tres_casos_para_cada_regra_atributo(numero_de_regras, atributos):
                 )
             )
     
-        formula_or = or_all(and_lista)
+        formula_or = and_all(and_lista)
         dados_formula.append(formula_or)
 
     return and_all(dados_formula)
 
-'''Cada regra deve ter algum atributo aparecendo nela'''
+"""Restrição 2: Cada regra deve ter algum atributo aparecendo nela"""
 def restricao2(atributos , num_regras):
     dados_formula = []
     for i in range(1, num_regras+1):
@@ -82,8 +82,8 @@ def pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_pato
 
     return and_all(dados_formula)
 
-'''Para cada paciente com patologia, cada regra e cada atributo, se o atributo do paciente n ̃ao se aplicar
-ao da regra, ent ̃ao a regra n ̃ao cobre esse paciente.'''
+"""Restrição 4: Para cada paciente com patologia, cada regra e cada atributo, se o atributo do paciente n ̃ao se aplicar
+ao da regra, ent ̃ao a regra n ̃ao cobre esse paciente."""
 def restricao4(pacientes_com_patologia, atributos, regras):
     dados_formula = []
     for j in range(len(pacientes_com_patologia)):
@@ -107,6 +107,7 @@ def restricao4(pacientes_com_patologia, atributos, regras):
             lista.append(and_all(implie_lista))
         dados_formula.append(and_all(lista))
     return and_all(dados_formula)
+
 """Restrição 5: Cada paciente com patologia deve ser coberto por alguma das regras."""
 def pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, numero_de_regras):
 
