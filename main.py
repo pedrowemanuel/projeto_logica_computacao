@@ -55,6 +55,7 @@ def main(args):
     solucao = satisfiability_brute_force(formula_final)
 
     if solucao:
+        print("Regras:")
         print(montarRegras(solucao))
     else:
         print('Não existe um conjunto de ' + str(m) + ' regras que classifique corretamente todos os pacientes.')
