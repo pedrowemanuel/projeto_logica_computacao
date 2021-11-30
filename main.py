@@ -1,5 +1,5 @@
 import sys
-from auxiliary_functions import separar_dados
+from auxiliary_functions import separar_dados, montarRegras
 
 from restrictions import *
 
@@ -35,11 +35,7 @@ def main(args):
 
     # seperando os dados
     [atributos, pacientes_com_patologia, pacientes_sem_patologia] = separar_dados(dados)
-    #print(apenas_tres_casos_para_cada_regra_atributo(m, atributos))
-    #print(restricao2(atributos, m))
-    #print(pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_patologia, m, atributos))
-    #print(restricao4(pacientes_com_patologia, atributos, m))
-    #print(pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, m))
+
     formula_final = And(
         And(
             And(
@@ -53,32 +49,17 @@ def main(args):
         ),
         pacientes_com_patologia_cobertos_alguma_regra(pacientes_com_patologia, m)
     )
-    #print(length(formula_final))
-    print(formula_final)
+
+    print('Processando ...')
+
     solucao = satisfiability_brute_force(formula_final)
-    #print(solucao)
-    '''regra_solucao = []
+
     if solucao:
-        for i in solucao:
-            if 'C' in i:
-                continue
-            if solucao[i]:
-                partes_resposta = i.split("_")
-                if partes_resposta[3] == "n":
-                    partes_atributo = partes_resposta[1].split(" ")
-                    regra_solucao.append(partes_atributo[0]+" > "+partes_atributo[2])
-                elif partes_resposta[3] == "p":
-                    regra_solucao.append(partes_resposta[1])
-        print(regra_solucao)
+        print(montarRegras(solucao))
     else:
         print('Não existe um conjunto de ' + str(m) + ' regras que classifique corretamente todos os pacientes.')
-'''
+
     return 0
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
-
-
-'''{(xP I≤42.09,1,p, F),(xP I≤42.09,1,n, T),(xP I≤42.09,1,s, F),(xP I≤42.09,2,p, F),(xP I≤42.09,2,n, F),(xP I≤42.09,2,s, T)
-(xP I≤70.62,1,p, T),(xP I≤70.62,1,n, F),(xP I≤70.62,1,s, F),(xP I≤70.62,2,p, F),(xP I≤70.62,2,n, F),(xP I≤70.62,2,s, T)
-(xGS≤37.89,1,p, F),(xGS≤37.89,1,n, F),(xGS≤37.89,1,s, T),(xGS≤37.89,2,p, F),(xGS≤37.89,2,n, T),(xGS≤37.89,2,s, F)'''

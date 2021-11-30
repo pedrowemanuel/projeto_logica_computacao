@@ -43,18 +43,15 @@ def restricao2(atributos , num_regras):
     for i in range(1, num_regras+1):
         lista = []
         for j in range(0,len(atributos)):
-            or_lista = []
-            or_lista.append(
-                Not(
+            formula = Not(
                     Atom(
                         "X_"+str(atributos[j])+"_"+str(i)+"_s"  
                     )
                 )
-            )    
-            formula_or = or_all(or_lista)
-            lista.append(formula_or)
-        formula = or_all(lista)
-        dados_formula.append(formula)
+  
+            lista.append(formula)
+        formula_or = or_all(lista)
+        dados_formula.append(formula_or)
     return and_all(dados_formula)
 
 """Restrição 3: Para cada paciente sem patologia e cada regra, algum atributo do paciente não pode ser aplicado à
@@ -83,7 +80,7 @@ def pacientes_sem_patologia_algum_atributo_nao_aplicado_regra(pacientes_sem_pato
     return and_all(dados_formula)
 
 """Restrição 4: Para cada paciente com patologia, cada regra e cada atributo, se o atributo do paciente n ̃ao se aplicar
-ao da regra, ent ̃ao a regra n ̃ao cobre esse paciente."""
+ao da regra, ent ̃ao a regra não cobre esse paciente."""
 def restricao4(pacientes_com_patologia, atributos, regras):
     dados_formula = []
     for j in range(len(pacientes_com_patologia)):

@@ -32,3 +32,30 @@ def separar_dados(dados):
                 dados_paciente.pop()
                 pacientes_com_patologia.append(dados_paciente)
     return [atributos, pacientes_com_patologia, pacientes_sem_patologia]
+
+def montarRegras(solucao):
+
+    regras = {}
+
+    for i in solucao:
+        partes_resposta = i.split("_")
+        if partes_resposta[0] == 'C':
+            continue
+        if solucao[i]:
+            numero_regra = partes_resposta[2]
+            if numero_regra not in regras:
+                regras[numero_regra] = []
+            if partes_resposta[3] == "n":
+                partes_atributo = partes_resposta[1].split(" ")
+                regras[numero_regra].append(partes_atributo[0]+" > "+partes_atributo[2])
+            elif partes_resposta[3] == "p":
+                regras[numero_regra].append(partes_resposta[1])
+
+    regras_string = "{"
+
+    for regra in regras.values():
+        regras_string += "[" + str(regra) + "]" + u"\u21d2" + " P,\n"
+
+    regras_string += "}"
+
+    return regras_string
