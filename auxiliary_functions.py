@@ -53,10 +53,9 @@ def montarRegras(solucao):
 
     regras_string = "{"
 
-    for numero, regra in regras.items():
-        regras_string += str(regra) + u"\u21d2" + " P"
-
-        if(int(numero) == len(regras)):
+    for numero in range(1, len(regras) + 1):
+        regras_string += str(regras[str(numero)]) + u"\u21d2" + " P"
+        if(int(numero) < len(regras)):
             regras_string += ",\n"
 
     regras_string += "}"
