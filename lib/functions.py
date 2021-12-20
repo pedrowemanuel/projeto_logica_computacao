@@ -106,15 +106,39 @@ def is_clause(formula):
 
 
 def is_negation_normal_form(formula):
-    """Returns True if formula is in negation normal form.
-    Returns False, otherwise."""
-    pass  # ======== REMOVE THIS LINE AND INSERT YOUR CODE HERE ========
+    if isinstance(formula, Atom):
+        return formula
 
+    if isinstance( isinstance(formula, Not), Not):
+        return is_negation_normal_form(formula)
+
+    if isinstance(formula, Or):
+        return is_negation_normal_form(Atom(And (Not (formula.left) , Not(formula.right))))
+
+    if isinstance(formula, And):
+        return is_negation_normal_form(Atom(Or (Not (formula.left) , Not(formula.right) ) ))
+
+def implication_free(formula):
+    if isinstance(formula, Implies):
+        return (Or(Not(implication_free(formula.left)),implication_free(formula.right)))     
+
+    if isinstance(formula, And):
+        return (And(implication_free(formula.left), implication_free(formula.right)))
+
+    if isinstance(formula, Or):
+        return (Or(implication_free(formula.left), implication_free(formula.right)))
+        
+    if isinstance(formula, Atom):
+        return formula   
+
+    if isinstance(formula, Not):
+        return (Not(implication_free(formula.inner)))
 
 def is_cnf(formula):
-    """Returns True if formula is in conjunctive normal form.
-    Returns False, otherwise."""
-    pass  # ======== REMOVE THIS LINE AND INSERT YOUR CODE HERE ========
+    b = implication_free(formula)
+    b = is_negation_normal_form(b)
+    return b
+
 
 
 def is_term(formula):

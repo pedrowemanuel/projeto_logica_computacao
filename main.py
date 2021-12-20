@@ -1,6 +1,6 @@
 import sys
 from auxiliary_functions import separar_dados, montarRegras
-
+from lib.functions import *
 from restrictions import *
 
 def main(args):
@@ -53,14 +53,14 @@ def main(args):
     print('Processando ...')
 
     solucao = satisfiability_brute_force(formula_final)
-
-    if solucao:
+    print(is_cnf(formula_final))
+    ''' if solucao:
         print("Regras:")
         print(montarRegras(solucao))
     else:
         print('Não existe um conjunto de ' + str(m) + ' regras que classifique corretamente todos os pacientes.')
-
-    return 0
+    '''
+    return 0 
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
