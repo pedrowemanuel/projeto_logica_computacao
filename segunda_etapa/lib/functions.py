@@ -150,7 +150,14 @@ def distributive(formula):
     if isinstance(formula, And):
         return And(distributive(formula.left), distributive(formula.right))
     if isinstance(formula, Or):
-        return Or(distributive(formula.left), distributive(formula.right))
+        b1 = distributive(formula.left)
+        b2 = distributive(formula.right)
+        if isinstance(b1, And):
+            return And(distributive(Or(b1.left, b2)), distributive(Or(b1.right, b2)))
+        if isinstance(b2, And):
+            return And(distributive(Or(b1, b2.left)), distributive(Or(b1, b2.right)))
+        return (Or(b1, b2))
+    return formula
 
 def is_cnf(formula):
     b = implication_free(formula)
