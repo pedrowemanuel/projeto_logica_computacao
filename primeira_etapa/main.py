@@ -53,13 +53,13 @@ def main(args):
     print('Processando ...')
 
     solucao = satisfiability_brute_force(formula_final)
-    print(is_cnf(formula_final))
-    ''' if solucao:
+
+    if solucao:
         print("Regras:")
         print(montarRegras(solucao))
     else:
         print('Não existe um conjunto de ' + str(m) + ' regras que classifique corretamente todos os pacientes.')
-    '''
+
     return 0 
 
 if __name__ == "__main__":

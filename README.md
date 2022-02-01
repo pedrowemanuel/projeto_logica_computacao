@@ -1,6 +1,6 @@
-# Projeto Prático - Primeira Etapa
+# Projeto Prático sobre lógica proposicional
 
-Primeira etapa do projeto prático da disciplina de Lógica para Computação - IFCE Campos Macacanaú.
+Projeto prático da disciplina de Lógica para Computação - IFCE Campos Macacanaú.
 
 ### Equipe:
 * Pedro Emanuel dos Santos Rodrigues
