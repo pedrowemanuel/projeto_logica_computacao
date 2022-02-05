@@ -112,18 +112,21 @@ def is_negation_normal_form(formula):
     if isinstance(formula, Not):
         if isinstance(formula.inner, Atom):
             return formula
+
         if isinstance(formula.inner , Not):
             return is_negation_normal_form(formula.inner.inner)
+
         if isinstance(formula.inner, And):
             return is_negation_normal_form(Or(Not(formula.inner.left), Not(formula.inner.right)))
+
         if isinstance(formula.inner, Or):
             return is_negation_normal_form(And(Not(formula.inner.left), Not(formula.inner.right)))
 
     if isinstance(formula, Or):
-        return is_negation_normal_form(And(Not(formula.left), Not(formula.right)))
+        return (Or(is_negation_normal_form(formula.left), is_negation_normal_form(formula.right)))
 
     if isinstance(formula, And):
-        return is_negation_normal_form(Or(Not(formula.left) , Not(formula.right) ) )
+        return (And(is_negation_normal_form(formula.left), is_negation_normal_form(formula.right)))
 
 
 
@@ -147,22 +150,31 @@ def implication_free(formula):
 def distributive(formula):
     if isinstance(formula, Atom):
         return formula
+
     if isinstance(formula, And):
         return And(distributive(formula.left), distributive(formula.right))
+
     if isinstance(formula, Or):
         b1 = distributive(formula.left)
         b2 = distributive(formula.right)
+
         if isinstance(b1, And):
             return And(distributive(Or(b1.left, b2)), distributive(Or(b1.right, b2)))
+
         if isinstance(b2, And):
             return And(distributive(Or(b1, b2.left)), distributive(Or(b1, b2.right)))
+
         return (Or(b1, b2))
+        
     return formula
 
 def is_cnf(formula):
     b = implication_free(formula)
+
     b = is_negation_normal_form(b)
+
     b = distributive(b)
+
     return b
 
 
