@@ -103,3 +103,38 @@ def true_interpretation_for_atom_not_and(formula, interpretation, listAtoms):
     if isinstance(formula, And):
         true_interpretation_for_atom_not_and(formula.left, interpretation, listAtoms)
         true_interpretation_for_atom_not_and(formula.right, interpretation, listAtoms)
+    
+def DPLL(formula):
+    """Checks if the formula is satisfiable.
+      It takes an input formula in CNF format and if satisfies, it returns an interpretation that assigns true to the formula.
+      Otherwise, it returns False."""
+
+    return DPLL_check(formula, [])
+
+def DPLL_check(formula, interpretation):
+    [formula, interpretation] = unit_propagation(formula, interpretation)
+
+    if formula == []:
+        return interpretation
+
+    if check_empty_clause(formula):
+        return False
+
+    atomic = get_atomic(formula)
+
+    formulaCopy = formula.copy()
+    formulaCopy2 = formula.copy()
+
+    
+
+def unit_propagation(formula, interpration):
+    """BCP."""
+    return [formula, interpration]
+
+def check_empty_clause(formula):
+    """ check if there is an empty clause in the formula """
+    return False
+
+def get_atomic(formula):
+    """ get an atomic from a formula """
+    return Atom('p')
