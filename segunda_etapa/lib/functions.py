@@ -2,6 +2,8 @@
 do some computation on its syntactic structure. """
 
 
+from ast import With
+from msilib import type_string
 from .formula import *
 
 
@@ -165,7 +167,7 @@ def distributive(formula):
             return And(distributive(Or(b1, b2.left)), distributive(Or(b1, b2.right)))
 
         return (Or(b1, b2))
-        
+
     return formula
 
 def is_cnf(formula):
@@ -205,6 +207,7 @@ def and_all(list_formulas):
     :param list_formulas: a list of formulas
     :return: And formula
     """
+    print (list_formulas)
     first_formula = list_formulas[0]
     del list_formulas[0]
     for formula in list_formulas:
@@ -223,5 +226,25 @@ def or_all(list_formulas):
     first_formula = list_formulas[0]
     del list_formulas[0]
     for formula in list_formulas:
-        first_formula = Or(first_formula, formula)
+        if int(formula) < 0:
+            first_formula = Or(first_formula, Not(formula*(-1)))
+        else:
+            first_formula = Or(first_formula, formula)
     return first_formula
+
+
+def dimacs_para_cnf():
+    arquivo = open('DIMACS/Fórmulas Insatisfatíveis/uuf50-01.cnf', 'r')
+    numeros = []
+    lista = []
+    for linha in arquivo:
+        if 'c' in linha or 'p' in linha or '%' in linha:
+            continue
+        numeros.append(linha.split(" "))
+    for j in numeros:
+        lista.append(j[0:len(j)-1])
+    return lista
+
+
+def cnf_para_dimacs():
+    pass
