@@ -125,10 +125,27 @@ def DPLL_check(formula, interpretation):
     formulaCopy = formula.copy()
     formulaCopy2 = formula.copy()
 
+    formulaCopy.append([atomic])
+    formulaCopy2.append([atomic])
+
+    result = DPLL_check(formulaCopy, interpretation)
+
+    if result != False:
+        return result
+    
+    return DPLL_check(formulaCopy2, interpretation)
+
     
 
 def unit_propagation(formula, interpration):
     """BCP."""
+
+    while has_unit_clause(formula):
+        literal = literal_unit(formula)
+        interpration = interpration.append(literal)
+        formula = remove_clauses_with_literal(formula, literal)
+        formula = remove_complement_literal(formula, literal)
+
     return [formula, interpration]
 
 def check_empty_clause(formula):
@@ -137,4 +154,23 @@ def check_empty_clause(formula):
 
 def get_atomic(formula):
     """ get an atomic from a formula """
-    return Atom('p')
+    return 1
+
+def has_unit_clause(formula):
+    """ checks if the formula has a unitary clause """
+    return False
+
+def literal_unit(formula):
+   """ get literal from unit clause """
+
+   return 1
+
+def remove_clauses_with_literal(formula, literal):
+   """ remove all formula clauses, which have the literal """
+
+   return formula
+
+def remove_complement_literal(formula, literal):
+   """ remove all complements from the literal in the formula """
+
+   return formula
