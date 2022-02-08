@@ -2,8 +2,6 @@
 do some computation on its syntactic structure. """
 
 
-from ast import With
-from msilib import type_string
 from .formula import *
 
 

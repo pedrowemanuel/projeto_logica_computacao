@@ -109,7 +109,12 @@ def DPLL(formula):
       It takes an input formula in CNF format and if satisfies, it returns an interpretation that assigns true to the formula.
       Otherwise, it returns False."""
 
-    return DPLL_check(formula, [])
+    result = DPLL_check(formula, [])
+
+    if result != False:
+        return assign_value_irrelevant_literals(formula, result)
+
+    return result
 
 def DPLL_check(formula, interpretation):
     [formula, interpretation] = unit_propagation(formula, interpretation)
@@ -126,7 +131,7 @@ def DPLL_check(formula, interpretation):
     formulaCopy2 = formula.copy()
 
     formulaCopy.append([atomic])
-    formulaCopy2.append([atomic])
+    formulaCopy2.append([-atomic])
 
     result = DPLL_check(formulaCopy, interpretation)
 
@@ -141,8 +146,10 @@ def unit_propagation(formula, interpration):
     """BCP."""
 
     while has_unit_clause(formula):
+
         literal = literal_unit(formula)
-        interpration = interpration.append(literal)
+        interpration.append(literal)
+
         formula = remove_clauses_with_literal(formula, literal)
         formula = remove_complement_literal(formula, literal)
 
@@ -150,20 +157,37 @@ def unit_propagation(formula, interpration):
 
 def check_empty_clause(formula):
     """ check if there is an empty clause in the formula """
+
+    for clause in range(len(formula)):
+        if len(formula[clause]) == 0:
+            return True
+
     return False
 
 def get_atomic(formula):
-    """ get an atomic from a formula """
-    return 1
+	literal = most_frequent_literal(formula)
+    
+	if literal < 0:
+		return -(literal)
+
+	return literal
 
 def has_unit_clause(formula):
-    """ checks if the formula has a unitary clause """
-    return False
+	""" checks if the formula has a unitary clause """
+
+	for clause in range(len(formula)):
+		if len(formula[clause]) == 1:
+			return True
+
+	return False
 
 def literal_unit(formula):
-   """ get literal from unit clause """
+	""" get literal from unit clause """
+	for clause in range(len(formula)):
+		if len(formula[clause]) == 1:
+			return formula[clause][0]
 
-   return 1
+	return False
 
 def remove_clauses_with_literal(formula, literal):
    """ remove all formula clauses, which have the literal """
@@ -201,3 +225,39 @@ def remove_complement_literal(formula, literal):
        new_formula.append(new_clause)
        
    return new_formula
+
+def most_frequent_literal(formula):
+	""" take the most frequent literal in the formula"""
+
+	literals = {}
+
+	for clause in range(len(formula)):
+
+		for literal in range(len(formula[clause])):
+
+			if formula[clause][literal] not in literals:
+				literals[formula[clause][literal]] = 0
+
+			literals[formula[clause][literal]] += 1
+
+
+	literals_sorted = sorted(literals, key = literals.get, reverse = True)
+
+	return literals_sorted[0]
+
+def assign_value_irrelevant_literals(formula, interpretation):
+    """ assign value in irrelevant literals """
+
+    for clause in range(len(formula)):
+
+       for literal in range(len(formula[clause])):
+
+            if (formula[clause][literal] not in interpretation) and (-(formula[clause][literal]) not in interpretation):
+                
+                if (formula[clause][literal] >= 0):
+                    interpretation.append(-(formula[clause][literal]))
+                else:
+                    interpretation.append(formula[clause][literal])
+
+    return interpretation
+    
