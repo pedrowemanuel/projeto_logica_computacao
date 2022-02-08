@@ -226,10 +226,7 @@ def or_all(list_formulas):
     first_formula = list_formulas[0]
     del list_formulas[0]
     for formula in list_formulas:
-        if int(formula) < 0:
-            first_formula = Or(first_formula, Not(formula*(-1)))
-        else:
-            first_formula = Or(first_formula, formula)
+        first_formula = Or(first_formula, formula)
     return first_formula
 
 
