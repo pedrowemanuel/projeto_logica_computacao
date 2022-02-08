@@ -103,3 +103,101 @@ def true_interpretation_for_atom_not_and(formula, interpretation, listAtoms):
     if isinstance(formula, And):
         true_interpretation_for_atom_not_and(formula.left, interpretation, listAtoms)
         true_interpretation_for_atom_not_and(formula.right, interpretation, listAtoms)
+    
+def DPLL(formula):
+    """Checks if the formula is satisfiable.
+      It takes an input formula in CNF format and if satisfies, it returns an interpretation that assigns true to the formula.
+      Otherwise, it returns False."""
+
+    return DPLL_check(formula, [])
+
+def DPLL_check(formula, interpretation):
+    [formula, interpretation] = unit_propagation(formula, interpretation)
+
+    if formula == []:
+        return interpretation
+
+    if check_empty_clause(formula):
+        return False
+
+    atomic = get_atomic(formula)
+
+    formulaCopy = formula.copy()
+    formulaCopy2 = formula.copy()
+
+    formulaCopy.append([atomic])
+    formulaCopy2.append([atomic])
+
+    result = DPLL_check(formulaCopy, interpretation)
+
+    if result != False:
+        return result
+    
+    return DPLL_check(formulaCopy2, interpretation)
+
+    
+
+def unit_propagation(formula, interpration):
+    """BCP."""
+
+    while has_unit_clause(formula):
+        literal = literal_unit(formula)
+        interpration = interpration.append(literal)
+        formula = remove_clauses_with_literal(formula, literal)
+        formula = remove_complement_literal(formula, literal)
+
+    return [formula, interpration]
+
+def check_empty_clause(formula):
+    """ check if there is an empty clause in the formula """
+    return False
+
+def get_atomic(formula):
+    """ get an atomic from a formula """
+    return 1
+
+def has_unit_clause(formula):
+    """ checks if the formula has a unitary clause """
+    return False
+
+def literal_unit(formula):
+   """ get literal from unit clause """
+
+   return 1
+
+def remove_clauses_with_literal(formula, literal):
+   """ remove all formula clauses, which have the literal """
+
+   new_formula = []
+
+   for clause in range(len(formula)):
+       clause_contains_literal = False
+
+       for literal_clause in range(len(formula[clause])):
+
+            if literal == formula[clause][literal_clause]:
+                clause_contains_literal = True
+                break
+
+       if not clause_contains_literal:
+           new_formula.append(formula[clause])
+
+   return new_formula
+
+def remove_complement_literal(formula, literal):
+   """ remove all complements from the literal in the formula """
+
+   new_formula = []
+
+   for clause in range(len(formula)):
+
+       new_clause = []
+
+       for literal_clause in range(len(formula[clause])):
+
+            if -(literal) != formula[clause][literal_clause]:
+                new_clause.append(formula[clause][literal_clause])
+
+       new_formula.append(new_clause)
+       
+   return new_formula
