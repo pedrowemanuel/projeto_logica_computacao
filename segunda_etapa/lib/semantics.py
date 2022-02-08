@@ -168,9 +168,36 @@ def literal_unit(formula):
 def remove_clauses_with_literal(formula, literal):
    """ remove all formula clauses, which have the literal """
 
-   return formula
+   new_formula = []
+
+   for clause in range(len(formula)):
+       clause_contains_literal = False
+
+       for literal_clause in range(len(formula[clause])):
+
+            if literal == formula[clause][literal_clause]:
+                clause_contains_literal = True
+                break
+
+       if not clause_contains_literal:
+           new_formula.append(formula[clause])
+
+   return new_formula
 
 def remove_complement_literal(formula, literal):
    """ remove all complements from the literal in the formula """
 
-   return formula
+   new_formula = []
+
+   for clause in range(len(formula)):
+
+       new_clause = []
+
+       for literal_clause in range(len(formula[clause])):
+
+            if -(literal) != formula[clause][literal_clause]:
+                new_clause.append(formula[clause][literal_clause])
+
+       new_formula.append(new_clause)
+       
+   return new_formula
