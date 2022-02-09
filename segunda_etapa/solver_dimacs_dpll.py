@@ -4,7 +4,7 @@ from lib.semantics import *
 
 def main(args):
     
-    path_arquivo = "./DIMACS/Fórmulas Satisfatíveis/"
+    path_arquivo = "./DIMACS/Fórmulas Restrições Pacientes/"
     
     if(len(args) != 2):
         print("Parâmetros incorretos: digite -> python solver_dimacs_dpll.py nome_do_arquivo.cnf")
@@ -13,7 +13,7 @@ def main(args):
     nome_arquivo = args[1] #nome do arquivo
     
     # converter arquivo dimacs para formula em formato de lista
-    formula = dimacs_para_cnf(path_arquivo+nome_arquivo)   
+    [formula, atomos] = dimacs_para_cnf(path_arquivo+nome_arquivo)   
         
     # resolver a fórmula usando o algotimo dpll
     resultado = DPLL(formula)

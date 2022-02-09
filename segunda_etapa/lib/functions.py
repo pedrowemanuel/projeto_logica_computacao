@@ -234,10 +234,30 @@ def dimacs_para_cnf(arquivo):
         arquivo = open(arquivo, 'r')
         numeros = []
         lista = []
+        atomos = {}
+        
+        pegar_atomos = False
 
         for linha in arquivo:
+            
+            # pegando as atomicas e seus numeros correspondentes
+            if 'c atomics' in linha:
+                pegar_atomos = True
+                continue
+            if 'c end atomics' in linha:
+                pegar_atomos = False
+                continue
+            if pegar_atomos:
+                linha_com_atomo = linha.split("c ")
+                
+                atomo = linha_com_atomo[1].split(":")
+                atomos[atomo[0]] = int(atomo[1].replace("\n",""))
+                continue
+
             if 'c' in linha or 'p' in linha or '%' in linha:
                 continue
+            
+            # pegando a formula
             numeros.append(linha.split(" "))
         
         for j in numeros:
@@ -251,7 +271,7 @@ def dimacs_para_cnf(arquivo):
             
         arquivo.close()
 
-        return lista
+        return [lista, atomos]
     except FileNotFoundError as err:
         return err
 
