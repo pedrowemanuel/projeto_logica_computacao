@@ -228,18 +228,32 @@ def or_all(list_formulas):
     return first_formula
 
 
-def dimacs_para_cnf():
-    arquivo = open('DIMACS/Fórmulas Insatisfatíveis/uuf50-01.cnf', 'r')
-    numeros = []
-    lista = []
-    for linha in arquivo:
-        if 'c' in linha or 'p' in linha or '%' in linha:
-            continue
-        numeros.append(linha.split(" "))
-    for j in numeros:
-        lista.append(j[0:len(j)-1])
-    return lista
+def dimacs_para_cnf(arquivo):
+    
+    try:
+        arquivo = open(arquivo, 'r')
+        numeros = []
+        lista = []
 
+        for linha in arquivo:
+            if 'c' in linha or 'p' in linha or '%' in linha:
+                continue
+            numeros.append(linha.split(" "))
+        
+        for j in numeros:
+            
+            linha = []
+
+            for i in range(0, len(j) - 1):
+                linha.append(int(j[i]))
+
+            lista.append(linha)
+            
+        arquivo.close()
+
+        return lista
+    except FileNotFoundError as err:
+        return err
 
 def cnf_para_dimacs():
     pass

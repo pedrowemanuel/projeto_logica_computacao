@@ -4,13 +4,24 @@ from lib.semantics import *
 
 def main(args):
     
-    result = DPLL([[1,-1, -2], [4, 5, -6], [2], [-1], [2], [3], [-2,3], [2], [4, 5]])
+    path_arquivo = "./DIMACS/Fórmulas Satisfatíveis/"
+    
+    if(len(args) != 2):
+        print("Parâmetros incorretos: digite -> python solver_dimacs_dpll.py nome_do_arquivo.cnf")
+        sys.exit()
 
-    if result != False:
-        print(result)
+    nome_arquivo = args[1] #nome do arquivo
+    
+    # converter arquivo dimacs para formula em formato de lista
+    formula = dimacs_para_cnf(path_arquivo+nome_arquivo)   
+        
+    # resolver a fórmula usando o algotimo dpll
+    resultado = DPLL(formula)
+
+    if resultado != False:
+        print(resultado)
     else:
         print('A fórmula é insatisfatível')
-
 
     return 0 
 
