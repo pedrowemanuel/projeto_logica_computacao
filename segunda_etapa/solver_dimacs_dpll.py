@@ -1,6 +1,7 @@
 import sys
 from lib.functions import *
 from lib.semantics import *
+from auxiliary_functions import interpretacao_cnf_para_dicionario
 
 def main(args):
     
@@ -19,7 +20,7 @@ def main(args):
     resultado = DPLL(formula)
 
     if resultado != False:
-        print(resultado)
+        print(interpretacao_cnf_para_dicionario(resultado))
     else:
         print('A fórmula é insatisfatível')
 

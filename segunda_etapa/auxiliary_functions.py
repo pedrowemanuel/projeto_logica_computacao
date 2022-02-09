@@ -61,3 +61,16 @@ def montarRegras(solucao):
     regras_string += "}"
 
     return regras_string
+
+def interpretacao_cnf_para_dicionario(interpretacao):
+    """ converte uma valoração no formato de lista(cnf) para dicionário:
+        Ex: [1,2,-3] ===> {1:True,2:True,3:False} """
+    
+    interpretacao_convertida = {}      
+    for literal in interpretacao:
+        if int(literal) >= 0:
+            interpretacao_convertida[literal] = True
+        else:
+            interpretacao_convertida[literal] = False
+
+    return interpretacao_convertida
