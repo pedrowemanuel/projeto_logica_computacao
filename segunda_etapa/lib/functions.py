@@ -251,7 +251,7 @@ def dimacs_para_cnf(arquivo):
                 linha_com_atomo = linha.split("c ")
                 
                 atomo = linha_com_atomo[1].split(":")
-                atomos[atomo[0]] = int(atomo[1].replace("\n",""))
+                atomos[int(atomo[1].replace("\n",""))] = atomo[0]
                 continue
 
             if 'c' in linha or 'p' in linha or '%' in linha:

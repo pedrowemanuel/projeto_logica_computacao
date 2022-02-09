@@ -71,6 +71,15 @@ def interpretacao_cnf_para_dicionario(interpretacao):
         if int(literal) >= 0:
             interpretacao_convertida[literal] = True
         else:
-            interpretacao_convertida[literal] = False
+            interpretacao_convertida[-literal] = False
+
+    return interpretacao_convertida
+
+def substituir_valores_por_atomos(interpretacao, atomos):
+    """ substitui as chaves de um dicionario por seus respectivos atomos """
+    
+    interpretacao_convertida = {}      
+    for atomo in interpretacao.keys():
+        interpretacao_convertida[atomos[atomo]] = interpretacao[atomo]
 
     return interpretacao_convertida

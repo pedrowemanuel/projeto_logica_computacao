@@ -1,7 +1,7 @@
 import sys
 from lib.functions import *
 from lib.semantics import *
-from auxiliary_functions import interpretacao_cnf_para_dicionario
+from auxiliary_functions import interpretacao_cnf_para_dicionario,montarRegras, substituir_valores_por_atomos
 
 def main(args):
     
@@ -20,7 +20,16 @@ def main(args):
     resultado = DPLL(formula)
 
     if resultado != False:
-        print(interpretacao_cnf_para_dicionario(resultado))
+        
+        if atomos == {}:
+            print(resultado)
+        else:
+            resultado = interpretacao_cnf_para_dicionario(resultado)
+            resultado = substituir_valores_por_atomos(resultado, atomos)
+
+            print("Regras:")
+            print(montarRegras(resultado))
+
     else:
         print('A fórmula é insatisfatível')
 
