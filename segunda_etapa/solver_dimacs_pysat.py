@@ -12,7 +12,7 @@ def main(args):
     path_arquivo = "./DIMACS/Fórmulas Restrições Pacientes/"
     
     if(len(args) != 2):
-        print("Parâmetros incorretos: digite -> python solver_dimacs_dpll.py nome_do_arquivo.cnf")
+        print("Parâmetros incorretos: digite -> python solver_dimacs_pysat.py nome_do_arquivo.cnf")
         sys.exit()
 
     nome_arquivo = args[1] #nome do arquivo
@@ -26,7 +26,7 @@ def main(args):
     for clausula in formula:
         glucose.add_clause(clausula)
     
-    # resolver a fórmula usando o algotimo dpll
+    # resolver a fórmula usando o algotimo pysat Glucose 3
     inicio_execucao = time.time() 
     resultado = glucose.solve()
     fim_execucao = time.time()
