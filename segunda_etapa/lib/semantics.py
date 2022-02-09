@@ -157,10 +157,9 @@ def unit_propagation(formula, interpration):
 
 def check_empty_clause(formula):
     """ check if there is an empty clause in the formula """
-
-    for clause in range(len(formula)):
-        if len(formula[clause]) == 0:
-            return True
+    
+    if [] in formula:
+        return True
 
     return False
 
