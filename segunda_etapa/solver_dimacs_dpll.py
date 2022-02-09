@@ -2,6 +2,7 @@ import sys
 from lib.functions import *
 from lib.semantics import *
 from auxiliary_functions import interpretacao_cnf_para_dicionario,montarRegras, substituir_valores_por_atomos
+import time
 
 def main(args):
     
@@ -15,9 +16,13 @@ def main(args):
     
     # converter arquivo dimacs para formula em formato de lista
     [formula, atomos] = dimacs_para_cnf(path_arquivo+nome_arquivo)   
-        
+    
     # resolver a fórmula usando o algotimo dpll
+    inicio_execucao = time.time() 
     resultado = DPLL(formula)
+    fim_execucao = time.time()
+    
+    print("Tempo de execução: " + str(fim_execucao - inicio_execucao) + " s")
 
     if resultado != False:
         

@@ -275,5 +275,35 @@ def dimacs_para_cnf(arquivo):
     except FileNotFoundError as err:
         return err
 
+def atomos_dimacs_cnf(arquivo):
+    
+    try:
+        arquivo = open(arquivo, 'r')
+        atomos = {}
+        
+        pegar_atomos = False
+
+        for linha in arquivo:
+            
+            # pegando as atomicas e seus numeros correspondentes
+            if 'c atomics' in linha:
+                pegar_atomos = True
+                continue
+            if 'c end atomics' in linha:
+                pegar_atomos = False
+                continue
+            if pegar_atomos:
+                linha_com_atomo = linha.split("c ")
+                
+                atomo = linha_com_atomo[1].split(":")
+                atomos[int(atomo[1].replace("\n",""))] = atomo[0]
+                continue
+            
+        arquivo.close()
+
+        return atomos
+    except FileNotFoundError as err:
+        return err
+
 def cnf_para_dimacs():
     pass
