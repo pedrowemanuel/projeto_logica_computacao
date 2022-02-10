@@ -288,6 +288,7 @@ def dimacs_para_cnf(arquivo):
     except FileNotFoundError as err:
         return err
 
+
 def cnf_para_dimacs(formula_cnf, nome_arquivo, regras):
     lista = atoms(formula_cnf) #recebe as atomicas
     atomicas = {}
@@ -312,4 +313,3 @@ def cnf_para_dimacs(formula_cnf, nome_arquivo, regras):
     arquivo.write(f"p cnf {index-1} {qtd_and}\n")
     
     arquivo.close()
-
