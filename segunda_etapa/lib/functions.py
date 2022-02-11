@@ -353,7 +353,7 @@ def cnf_para_dimacs(formula_cnf, nome_arquivo, regras):
     # arquivo.close()
     
 def conjuncao_clausulas_para_lista(formula):
-    """ converte uma formula no formato And(Atom('p'), Atom('q')) para [[1], [2]] """
+    """ converte uma formula no formato And(Atom('p'), Atom('q')) para [[Atom('p')], [Atom('q')]] """
     
     lista_and = []
     recursive_clausulas_para_lista(formula, lista_and)
