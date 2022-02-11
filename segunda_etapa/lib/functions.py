@@ -356,17 +356,17 @@ def conjuncao_clausulas_para_lista(formula):
     """ converte uma formula no formato And(Atom('p'), Atom('q')) para [[1], [2]] """
     
     lista_and = []
-    recurive_clausulas_para_lista(formula, lista_and)
+    recursive_clausulas_para_lista(formula, lista_and)
     return lista_and
 
-def recurive_clausulas_para_lista(formula, lista_and):
+def recursive_clausulas_para_lista(formula, lista_and):
 
     if isinstance(formula.left, And):
-        recurive_clausulas_para_lista(formula.left, lista_and)
+        recursive_clausulas_para_lista(formula.left, lista_and)
     else:
         lista_and.append([formula.left])
         
     if isinstance(formula.right, And):
-        recurive_clausulas_para_lista(formula.right, lista_and)
+        recursive_clausulas_para_lista(formula.right, lista_and)
     else:
         lista_and.append([formula.right])
