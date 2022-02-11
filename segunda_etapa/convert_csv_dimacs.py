@@ -7,7 +7,7 @@ def main(args):
     dados = []
 
     if(len(args) != 3):
-        print("Parâmetros incorretos: digite -> python main.py nome_do_arquivo.csv n_regras")
+        print("Parâmetros incorretos: digite -> python convert_csv_dimacs.py nome_do_arquivo.csv n_regras")
         sys.exit()
 
     if(int(args[2]) <= 0):
