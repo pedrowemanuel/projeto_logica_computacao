@@ -340,9 +340,13 @@ def cnf_para_dimacs(formula_cnf, nome_arquivo, regras):
     arquivo.write("c \n")
     arquivo.write("c atomics\n")
     for i in atomicas.items():
-         arquivo.write(f"c {i[0]}:{i[1]}\n")
+        arquivo.write(f"c {i[0]}:{i[1]}\n")
     arquivo.write("c end atomics\n")
     arquivo.write(f"p cnf {index-1} {qtd_and}\n")
+    for linha in lista_cnf:
+        for item in linha:
+            arquivo.write(f"{item} ")
+        arquivo.write("0\n")
     
     
     # print("O arquivo '"+nome_arquivo+"_solution_"+str(regras)+"_regras.cnf' foi gerado")
